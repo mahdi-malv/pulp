@@ -33,6 +33,11 @@ Pulp.info("TAG", "Message, but not enough") {
 }
 ```
 
+**Note**: You can pass an array of tags instead of one:
+```kt
+Pulp.warn(arrayOf("Becareful", "MyApp"), "Message", throwable)
+```
+
 Output will be like:
 ```
 2019-08-01 16:06:40.768 26299-26299/ir.malv.logtest I/Pulp: MainTag:
@@ -95,6 +100,22 @@ Pulp.addHandler(object: Pulp.LogHandler {
 ```kt
 Pulp.setHandlerEnabled(enabled = false)
 ```
+
+###### Log levels
+* `D`: Debug
+* `I`: Info
+* `W`: Warning
+* `E`: Error
+* `WTF`: Unexpected
+
+##### Print a simple message (not a log)
+When you don't want to send callback or follow the message style of pulp, you can print a simple message.
+
+```kt
+Pulp.sout("Message") // output: MainTag ### Message
+```
+It will not notify callbacks.
+
 
 * All config methods can be chained:
 
