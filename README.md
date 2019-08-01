@@ -1,5 +1,5 @@
 # Pulp
-Pulp is a logger tool for android using **Kotlin** programming language.
+Pulp is a very simple logger tool for android using **Kotlin** programming language.
 
 
 ### Installation
