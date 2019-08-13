@@ -12,8 +12,9 @@ maven { url 'https://dl.bintray.com/mah-d/maven' }
 * Add the dependency code to your project
 
 ```groovy
-implementation 'ir.malv.utils:pulp:0.0.1'
+implementation "ir.malv.utils:pulp:$version"
 ```
+<img src="https://img.shields.io/github/release-pre/mahdi-malv/pulp"></img>
 
 ### Usage
 
