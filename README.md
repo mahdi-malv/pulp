@@ -2,7 +2,7 @@
 Pulp is a very simple logger tool for android using **Kotlin** programming language.
 
 
-### Installation
+## Installation
 
 * Add the dependency code to your project
 
@@ -24,15 +24,15 @@ implementation "ir.malv.utils:pulp:$version"
 <img src="https://img.shields.io/github/release-pre/mahdi-malv/pulp"></img>
 
 
-### Usage
+## Usage
 
-#### Simple usage
+### Simple usage
 
 ```kotlin
 Pulp.info("TAG", "This is a message")
 ```
 
-##### Add extra data
+#### Add extra data
 
 ```kotlin
 Pulp.info("TAG", "Message, but not enough") {
@@ -57,7 +57,7 @@ Output will be like:
      ExtraMessage2  Message...
 ```
 
-##### Add throwable to log
+#### Add throwable to log
 
 ```kotlin
 val t = Throwable("Error")
@@ -66,15 +66,15 @@ Pulp.error("TAG", "Failed", t) {
 }
 ```
 
-##### Setting the Log tag
+#### Setting the Log tag
 
 ```kotlin
 Pulp.setMainTag("My APP")
 ```
 
-#### Advanced usage
+### Advanced usage
 
-##### Toggle Enable/Disable Pulp
+#### Toggle Enable/Disable Pulp
 
 ```kotlin
 Pulp.setLogsEnabled(false)
@@ -91,9 +91,9 @@ Disabling the logger can also be done using an AndroidManifest meta-data.
 Pulp.init(this /* context */)
 ```
 
-##### Listening to Logs when it was triggered
+#### Listening to Logs when it was triggered
 
-When Pulp triggers to print a log, it can be listened using callbacks (If Pulp was disabled via manifest it still can be listened)
+When Pulp triggers to print a log, it can be listened using callbacks.
 
 ```kotlin
 Pulp.addHandler(object: Pulp.LogHandler {
@@ -116,7 +116,7 @@ Pulp.addHandler(object: Pulp.LogHandler {
 Pulp.setHandlerEnabled(enabled = false)
 ```
 
-##### Enable using database
+#### Enable using database
 
 Pulp can save logs into it's database and return the in a `LiveData` stream.
 To enable database call:
@@ -137,14 +137,14 @@ savedLogs.observe(activity, Observer {
 })
 ```
 
-###### Log levels
+##### Log levels
 * `D`: Debug
 * `I`: Info
 * `W`: Warning
 * `E`: Error
 * `WTF`: Unexpected
 
-##### Print a simple message (not a Pulp log)
+#### Print a simple message (not a Pulp log)
 When you don't want to send callback or follow the message style of pulp, you can print a simple message.
 
 ```kotlin
