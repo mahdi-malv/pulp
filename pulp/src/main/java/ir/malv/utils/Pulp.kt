@@ -1,10 +1,11 @@
 package ir.malv.utils
 
+import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
-import java.io.PrintWriter
-import java.io.StringWriter
+import ir.malv.utils.db.PulpDatabaseImpl
+import ir.malv.utils.db.PulpItem
 
 
 /**
@@ -14,10 +15,13 @@ import java.io.StringWriter
  */
 object Pulp {
 
-    private var LOG_TAG = "Pulp"
+    private var LOG_TAG = ""
     private var handlers: MutableList<LogHandler> = mutableListOf()
     private var logEnabled = true
+    private var databaseEnabled = false
     private var handlersEnabled = true
+
+    private var applicationContext: Context? = null
 
     /**
      * If you have added manifest config for logger,
@@ -25,11 +29,17 @@ object Pulp {
      * Pulp needs context to interact with manifest.
      */
     fun init(context: Context): Pulp {
+        applicationContext = context.applicationContext
         val ai = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
-        val value = ai.metaData.get("pulp_enabled") ?: return this
+        val value = ai.metaData?.get("pulp_enabled") ?: return this
         logEnabled = if (listOf("true", "1", "yes", "ok").contains(value.toString().toLowerCase())) {
             true
         } else !listOf("false", "0", "no", "nope").contains(value.toString())
+        return this
+    }
+
+    fun setApplicationContext(context: Context): Pulp {
+        applicationContext = context.applicationContext
         return this
     }
 
@@ -42,6 +52,30 @@ object Pulp {
         return this
     }
 
+    fun setLogsEnabled(enabled: Boolean): Pulp {
+        logEnabled = enabled
+        return this
+    }
+
+    fun setDatabaseEnabled(enabled: Boolean): Pulp {
+        databaseEnabled = enabled
+        return this
+    }
+
+    /**
+     * In order to interact with logs saved into database, this function will return a LiveData of all items.
+     * @param context is needed for database, but if [Pulp.init] was called, it's not needed to enter context.
+     *
+     * If [Pulp.init] was not called and
+     */
+    fun getSavedLogs(context: Context): LiveData<List<PulpItem>> {
+        return PulpDatabaseImpl.savedLogs(context)
+    }
+
+    fun clearLogs(context: Context) {
+        PulpDatabaseImpl.clearLogs(context)
+    }
+
     /**
      * Every log created to be shown will also be sent to all handlers.
      * Using this method you can add handler to list of handlers.
@@ -51,6 +85,8 @@ object Pulp {
         return this
     }
 
+    fun removeAllHandlers() = handlers.clear()
+
     /**
      * Calling this with false param, will cause the handlers, not to be nitified.
      * This is separate from log enabled. Even if the log is disabled, handlers will be notified.
@@ -59,6 +95,8 @@ object Pulp {
         handlersEnabled = enabled
         return this
     }
+
+    // ------ Logs
 
     fun debug(tags: Array<String>, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) {
         val mapData = LogData()
@@ -106,37 +144,44 @@ object Pulp {
         wtf(arrayOf(tag), message, error, data)
 
     private fun log(level: Level, tags: List<String>, message: String, t: Throwable? = null, data: LogData) {
+
+        if (!logEnabled) return
+
+        val time = System.currentTimeMillis()
+
         if (handlersEnabled) {
             for (h in handlers) {
-                h.onLog(level, tags, message, t, data)
+                h.onLog(level, tags, message, t, data, time)
             }
         }
-        if (!logEnabled) return
-        val logMessage = logMessage(tags, message, t, data)
+
+        if (databaseEnabled) {
+            applicationContext?.let {
+                PulpDatabaseImpl.insert(it, level, tags, message, t, data, time)
+            }
+        }
+
+        val logMessage = logMessage(tags, message, data)
         when (level) {
-            Pulp.Level.I -> if (t != null) Log.i(LOG_TAG, logMessage, t) else Log.i(
-                LOG_TAG, logMessage)
-            Pulp.Level.D -> if (t != null) Log.d(LOG_TAG, logMessage, t) else Log.d(
-                LOG_TAG, logMessage)
-            Pulp.Level.W -> if (t != null) Log.w(LOG_TAG, logMessage, t) else Log.w(
-                LOG_TAG, logMessage)
-            Pulp.Level.E,
-            Pulp.Level.WTF -> if (t != null) Log.e(LOG_TAG, logMessage, t) else Log.e(
-                LOG_TAG, logMessage)
+            Pulp.Level.I -> if (t != null) Log.i(LOG_TAG, logMessage, t) else Log.i(LOG_TAG, logMessage)
+            Pulp.Level.D -> if (t != null) Log.d(LOG_TAG, logMessage, t) else Log.d(LOG_TAG, logMessage)
+            Pulp.Level.W -> if (t != null) Log.w(LOG_TAG, logMessage, t) else Log.w(LOG_TAG, logMessage)
+            Pulp.Level.E -> if (t != null) Log.e(LOG_TAG, logMessage, t) else Log.e(LOG_TAG, logMessage)
+            Pulp.Level.WTF -> if (t != null) Log.wtf(LOG_TAG, logMessage, t) else Log.wtf(LOG_TAG, logMessage)
         }
     }
 
-    private fun logMessage(tags: List<String>, message: String, t: Throwable?, logData: LogData): String {
-        val writer = StringWriter()
-        t?.printStackTrace(PrintWriter(writer))
-        val stackTrace = writer.toString()
+    private fun logMessage(
+        tags: List<String>,
+        message: String,
+        logData: LogData
+    ): String {
         return """
 $LOG_TAG:
 Tags: $tags
 Message: $message
 ${if (logData.data.isNotEmpty()) "Data:\n${logData.data.map { "\t${it.key}\t${it.value}" }.joinToString("\n")}" else ""}
-${if (!stackTrace.isBlank()) "StackTrace:\n$stackTrace" else ""}
-              """.trimIndent()
+""".trimIndent()
         }
 
 
@@ -150,7 +195,7 @@ ${if (!stackTrace.isBlank()) "StackTrace:\n$stackTrace" else ""}
     }
 
     interface LogHandler {
-        fun onLog(level: Level, tags: List<String>, message: String, t: Throwable? = null, data: LogData)
+        fun onLog(level: Level, tags: List<String>, message: String, t: Throwable? = null, data: LogData, time: Long = System.currentTimeMillis())
     }
 
     class LogData {
@@ -159,5 +204,4 @@ ${if (!stackTrace.isBlank()) "StackTrace:\n$stackTrace" else ""}
             data[this] = value
         }
     }
-
 }

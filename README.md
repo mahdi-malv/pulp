@@ -4,11 +4,6 @@ Pulp is a very simple logger tool for android using **Kotlin** programming langu
 
 ### Installation
 
-* Add this to your gradle repositories
-```groovy
-maven { url 'https://dl.bintray.com/mah-d/maven' }
-```
-
 * Add the dependency code to your project
 
 ```groovy
@@ -16,17 +11,30 @@ implementation "ir.malv.utils:pulp:$version"
 ```
 <img src="https://img.shields.io/github/release-pre/mahdi-malv/pulp"></img>
 
+Or include the pre-release version
+
+* Add this to your gradle repositories
+```groovy
+maven { url 'https://dl.bintray.com/mah-d/maven' }
+```
+
+```groovy
+implementation "ir.malv.utils:pulp:$version"
+```
+<img src="https://img.shields.io/github/release-pre/mahdi-malv/pulp"></img>
+
+
 ### Usage
 
-##### Simple usage
+#### Simple usage
 
-```kt
+```kotlin
 Pulp.info("TAG", "This is a message")
 ```
 
 ##### Add extra data
 
-```kt
+```kotlin
 Pulp.info("TAG", "Message, but not enough") {
    "ExtraMessage1" to "Message..."
    "ExtraMessage2" to "Message..."
@@ -35,8 +43,8 @@ Pulp.info("TAG", "Message, but not enough") {
 ```
 
 **Note**: You can pass an array of tags instead of one:
-```kt
-Pulp.warn(arrayOf("Becareful", "MyApp"), "Message", throwable)
+```kotlin
+Pulp.warn(arrayOf("Be careful", "MyApp"), "Message", throwable)
 ```
 
 Output will be like:
@@ -51,7 +59,7 @@ Output will be like:
 
 ##### Add throwable to log
 
-```kt
+```kotlin
 val t = Throwable("Error")
 Pulp.error("TAG", "Failed", t) {
     "Extra data" to "data"
@@ -60,28 +68,34 @@ Pulp.error("TAG", "Failed", t) {
 
 ##### Setting the Log tag
 
-```kt
+```kotlin
 Pulp.setMainTag("My APP")
 ```
 
+#### Advanced usage
+
 ##### Toggle Enable/Disable Pulp
 
-Disabling the logger can be done using an AndroidManifest meta-data.
+```kotlin
+Pulp.setLogsEnabled(false)
+```
+
+Disabling the logger can also be done using an AndroidManifest meta-data.
 
 ```xml
 <meta-data android:name="pulp_enabled" android:value="false" />
 ```
 **Note**: To get Pulp extract manifest (since it needs constructor), you need to add this to your `Application` class:
 
-```kt
+```kotlin
 Pulp.init(this /* context */)
 ```
 
-##### Listenning to Logs when it happened
+##### Listening to Logs when it was triggered
 
 When Pulp triggers to print a log, it can be listened using callbacks (If Pulp was disabled via manifest it still can be listened)
 
-```kt
+```kotlin
 Pulp.addHandler(object: Pulp.LogHandler {
     override fun onLog(
       level: Pulp.Level,
@@ -98,8 +112,29 @@ Pulp.addHandler(object: Pulp.LogHandler {
 **Note**: You can add multiple handlers and all of them will be called when logging.
 * Handlers can also be disabled:
 
-```kt
+```kotlin
 Pulp.setHandlerEnabled(enabled = false)
+```
+
+##### Enable using database
+
+Pulp can save logs into it's database and return the in a `LiveData` stream.
+To enable database call:
+
+```kotlin
+Pulp.setDatabaseEnabled(true)
+```
+
+And because interacting with database needs context, make sure you have called `Pulp.init(context)`, or `Pulp.setApplicationContext(context)`.
+
+And to interact with database using this code:
+
+```kotlin
+val savedLogs: LiveData<List<PulpItems>> = Pulp.getSavedLogs(context)
+
+savedLogs.observe(activity, Observer {
+   // it is List<PulpItem>
+})
 ```
 
 ###### Log levels
@@ -109,10 +144,10 @@ Pulp.setHandlerEnabled(enabled = false)
 * `E`: Error
 * `WTF`: Unexpected
 
-##### Print a simple message (not a log)
+##### Print a simple message (not a Pulp log)
 When you don't want to send callback or follow the message style of pulp, you can print a simple message.
 
-```kt
+```kotlin
 Pulp.sout("Message") // output: MainTag ### Message
 ```
 It will not notify callbacks.
@@ -120,10 +155,12 @@ It will not notify callbacks.
 
 * All config methods can be chained:
 
-```kt
+```kotlin
 Pulp.init(this)
     .setMainTag("MyApp")
     .setHandlerEnabled(true)
+    .setLogsEnabled(true)
+    .setDatabaseEnabled(true)
     .addHandler(object : Pulp.LogHandler {
     // ...
 })
