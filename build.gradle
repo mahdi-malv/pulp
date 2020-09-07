@@ -2,7 +2,12 @@
 
 
 buildscript {
-    ext.kotlin_version = '1.3.31'
+    ext {
+        versionName = '0.3.0'
+        versionCode = 30099  // Mmmpprr
+
+        kotlin_version = '1.3.31'
+    }
     repositories {
         google()
         jcenter()

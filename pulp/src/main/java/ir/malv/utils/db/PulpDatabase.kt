@@ -1,7 +1,7 @@
 package ir.malv.utils.db
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import android.content.Context
 
 @Database(entities = [PulpItem::class], exportSchema = false, version = 1)

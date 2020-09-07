@@ -12,3 +12,7 @@
 /build
 /captures
 .externalNativeBuild
+
+.idea/codeStyles/
+
+.idea/

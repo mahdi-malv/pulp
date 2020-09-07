@@ -1,5 +1,8 @@
-## 0.2.0
+## 0.3.0
+* Fix `clearLogs()` not operating on it's thread.
+* [Breaking] Migrate project to AndroidX.
 
+## 0.2.0
 * Disabling log using `Pulp.setLogEnabled`.
 * Fix minor bugs.
 * Fix extra stack trace while having throwable in the log.
@@ -11,7 +14,6 @@
 * Fix `Pulp.wtf` logging.
 
 ## 0.0.1
-
 * First release for testing purposes.
 * Basic functionality.
 * Support for handler and log callback.

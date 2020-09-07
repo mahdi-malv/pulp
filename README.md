@@ -15,7 +15,7 @@ Or include the pre-release version
 
 * Add this to your gradle repositories
 ```groovy
-maven { url 'https://dl.bintray.com/mah-d/maven' }
+maven { url 'https://dl.bintray.com/mah-d/preview' }
 ```
 
 ```groovy
@@ -135,6 +135,12 @@ val savedLogs: LiveData<List<PulpItems>> = Pulp.getSavedLogs(context)
 savedLogs.observe(activity, Observer {
    // it is List<PulpItem>
 })
+```
+
+and to clear the logs:
+
+```kotlin
+Pulp.clearLogs(context)
 ```
 
 ##### Log levels
