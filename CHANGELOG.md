@@ -1,5 +1,6 @@
-## 0.2.1
+## 0.3.0
 * Fix `clearLogs()` not operating on it's thread.
+* [Breaking] Migrate project to AndroidX.
 
 ## 0.2.0
 * Disabling log using `Pulp.setLogEnabled`.
