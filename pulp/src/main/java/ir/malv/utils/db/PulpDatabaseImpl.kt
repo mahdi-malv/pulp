@@ -1,6 +1,6 @@
 package ir.malv.utils.db
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import android.content.Context
 import ir.malv.utils.Pulp
 import org.json.JSONObject

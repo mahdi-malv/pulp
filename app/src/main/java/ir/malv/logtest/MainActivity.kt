@@ -1,7 +1,7 @@
 package ir.malv.logtest
 
-import android.arch.lifecycle.Observer
-import android.support.v7.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ir.malv.utils.Pulp
 import ir.malv.utils.db.PulpItem

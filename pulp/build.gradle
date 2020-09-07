@@ -6,15 +6,15 @@ apply plugin: 'kotlin-android-extensions'
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 20199 // Mmmpprr
-        versionName '0.2.1'
+        targetSdkVersion 29
+        versionCode 30099 // Mmmpprr
+        versionName '0.3.0'
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
 
@@ -28,10 +28,11 @@ android {
 }
 
 def deps = [
-        Room: 'android.arch.persistence.room:runtime:1.1.1',
-        RoomAnnotation: 'android.arch.persistence.room:compiler:1.1.1',
-        LifeCycleExtension: 'android.arch.lifecycle:extensions:1.1.1',
-        LifeCycleAnnotation: 'android.arch.lifecycle:compiler:1.1.1',
+        Room: 'androidx.room:room-runtime:2.0.0',
+        RoomAnnotation: 'androidx.room:room-compiler:2.0.0',
+        LifeCycleExtension: 'androidx.lifecycle:lifecycle-extensions:2.0.0',
+        LifeCycleAnnotation: 'androidx.lifecycle:lifecycle-compiler:2.0.0',
+        Annotations: 'annotation'
 ]
 
 dependencies {
@@ -45,7 +46,7 @@ dependencies {
     kapt deps.LifeCycleAnnotation
 
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 }
 
 
