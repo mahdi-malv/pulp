@@ -29,7 +29,7 @@ object PulpDatabaseImpl {
     fun clearLogs(context: Context) {
         Thread {
             PulpDatabase.database(context).pulpDao().clearAll()
-        }
+        }.start()
     }
 
 
