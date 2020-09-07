@@ -6,13 +6,16 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-29.0.3
-    - android-29
+    - build-tools-28.0.3
+    - android-28
     - extra
-  licenses:
-    - 'android-sdk-preview-license-52d11cd2'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
+before_install:
+  - yes | sdkmanager "platforms;android-28"
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -25,4 +28,5 @@ cache:
     - $HOME/.android/build-cache
 
 script:
+  - echo something > local.properties
   - ./gradlew clean assemble
