@@ -2,6 +2,12 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
+    /**
+     * maven: stable repo which is also linked to JCenter.
+     *  Publishing to maven pushes the version to JCenter straightaway
+     * preview: PreRelease versions including beta and ... should be released in this repo.
+     *  Publishing package to this repo is only accessible via it's link.
+     */
     bintrayRepo = 'maven'
     bintrayName = 'pulp'
 
