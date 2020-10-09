@@ -1,7 +1,7 @@
 package ir.malv.utils.db
 
-import androidx.lifecycle.LiveData
 import android.content.Context
+import androidx.lifecycle.LiveData
 import ir.malv.utils.Pulp
 import org.json.JSONObject
 import java.io.PrintWriter
@@ -9,7 +9,15 @@ import java.io.StringWriter
 
 object PulpDatabaseImpl {
 
-    fun insert(context: Context, level: Pulp.Level, tags: List<String>, message: String, throwable: Throwable?, data: Pulp.LogData, time: Long) {
+    fun insert(
+        context: Context,
+        level: Pulp.Level,
+        tags: List<String>,
+        message: String,
+        throwable: Throwable?,
+        data: Pulp.LogData,
+        time: Long
+    ) {
         Thread {
             PulpDatabase.database(context).pulpDao().insert(
                 PulpItem(
@@ -24,7 +32,8 @@ object PulpDatabaseImpl {
         }.start()
     }
 
-    fun savedLogs(context: Context): LiveData<List<PulpItem>> = PulpDatabase.database(context).pulpDao().getAll()
+    fun savedLogs(context: Context): LiveData<List<PulpItem>> =
+        PulpDatabase.database(context).pulpDao().getAll()
 
     fun clearLogs(context: Context) {
         Thread {
@@ -39,9 +48,12 @@ object PulpDatabaseImpl {
             val pw = PrintWriter(sw)
             throwable.printStackTrace(pw)
             sw.toString()
-        } else { "" }
+        } else {
+            ""
+        }
     }
 
-    private fun serializeData(data: Map<String, String?>?): String = data?.let { JSONObject(it).toString() } ?: ""
+    private fun serializeData(data: Map<String, String?>?): String =
+        data?.let { JSONObject(it).toString() } ?: ""
 
 }

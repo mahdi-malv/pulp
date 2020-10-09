@@ -1,9 +1,9 @@
 package ir.malv.utils
 
-import androidx.lifecycle.LiveData
 import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
+import androidx.lifecycle.LiveData
 import ir.malv.utils.db.PulpDatabaseImpl
 import ir.malv.utils.db.PulpItem
 
@@ -30,11 +30,15 @@ object Pulp {
      */
     fun init(context: Context): Pulp {
         applicationContext = context.applicationContext
-        val ai = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+        val ai = context.packageManager.getApplicationInfo(
+            context.packageName,
+            PackageManager.GET_META_DATA
+        )
         val value = ai.metaData?.get("pulp_enabled") ?: return this
-        logEnabled = if (listOf("true", "1", "yes", "ok").contains(value.toString().toLowerCase())) {
-            true
-        } else !listOf("false", "0", "no", "nope").contains(value.toString())
+        logEnabled =
+            if (listOf("true", "1", "yes", "ok").contains(value.toString().toLowerCase())) {
+                true
+            } else !listOf("false", "0", "no", "nope").contains(value.toString())
         return this
     }
 
@@ -98,52 +102,108 @@ object Pulp {
 
     // ------ Logs
 
-    fun debug(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun debug(
+        tags: Array<String>,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) {
         val mapData = LogData()
         mapData.data()
         log(Pulp.Level.D, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun debug(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun debug(
+        tag: String,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) =
         debug(arrayOf(tag), message, error, data)
 
-    fun info(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun info(
+        tags: Array<String>,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) {
         val mapData = LogData()
         mapData.data()
         log(Pulp.Level.I, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun info(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun info(
+        tag: String,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) =
         info(arrayOf(tag), message, error, data)
 
-    fun warn(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun warn(
+        tags: Array<String>,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) {
         val mapData = LogData()
         mapData.data()
         log(Pulp.Level.W, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun warn(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun warn(
+        tag: String,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) =
         warn(arrayOf(tag), message, error, data)
 
-    fun error(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun error(
+        tags: Array<String>,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) {
         val mapData = LogData()
         mapData.data()
         log(Pulp.Level.E, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun error(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun error(
+        tag: String,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) =
         error(arrayOf(tag), message, error, data)
 
-    fun wtf(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun wtf(
+        tags: Array<String>,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) {
         val mapData = LogData()
         mapData.data()
         log(Pulp.Level.WTF, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun wtf(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun wtf(
+        tag: String,
+        message: String?,
+        error: Throwable? = null,
+        data: LogData.() -> Unit = {}
+    ) =
         wtf(arrayOf(tag), message, error, data)
 
-    private fun log(level: Level, tags: List<String>, message: String, t: Throwable? = null, data: LogData) {
+    private fun log(
+        level: Level,
+        tags: List<String>,
+        message: String,
+        t: Throwable? = null,
+        data: LogData
+    ) {
 
         if (!logEnabled) return
 
@@ -163,11 +223,26 @@ object Pulp {
 
         val logMessage = logMessage(tags, message, data)
         when (level) {
-            Pulp.Level.I -> if (t != null) Log.i(LOG_TAG, logMessage, t) else Log.i(LOG_TAG, logMessage)
-            Pulp.Level.D -> if (t != null) Log.d(LOG_TAG, logMessage, t) else Log.d(LOG_TAG, logMessage)
-            Pulp.Level.W -> if (t != null) Log.w(LOG_TAG, logMessage, t) else Log.w(LOG_TAG, logMessage)
-            Pulp.Level.E -> if (t != null) Log.e(LOG_TAG, logMessage, t) else Log.e(LOG_TAG, logMessage)
-            Pulp.Level.WTF -> if (t != null) Log.wtf(LOG_TAG, logMessage, t) else Log.wtf(LOG_TAG, logMessage)
+            Pulp.Level.I -> if (t != null) Log.i(LOG_TAG, logMessage, t) else Log.i(
+                LOG_TAG,
+                logMessage
+            )
+            Pulp.Level.D -> if (t != null) Log.d(LOG_TAG, logMessage, t) else Log.d(
+                LOG_TAG,
+                logMessage
+            )
+            Pulp.Level.W -> if (t != null) Log.w(LOG_TAG, logMessage, t) else Log.w(
+                LOG_TAG,
+                logMessage
+            )
+            Pulp.Level.E -> if (t != null) Log.e(LOG_TAG, logMessage, t) else Log.e(
+                LOG_TAG,
+                logMessage
+            )
+            Pulp.Level.WTF -> if (t != null) Log.wtf(LOG_TAG, logMessage, t) else Log.wtf(
+                LOG_TAG,
+                logMessage
+            )
         }
     }
 
@@ -180,9 +255,13 @@ object Pulp {
 $LOG_TAG:
 Tags: $tags
 Message: $message
-${if (logData.data.isNotEmpty()) "Data:\n${logData.data.map { "\t${it.key}\t${it.value}" }.joinToString("\n")}" else ""}
-""".trimIndent()
+${
+            if (logData.data.isNotEmpty()) "Data:\n${
+                logData.data.map { "\t${it.key}\t${it.value}" }.joinToString("\n")
+            }" else ""
         }
+""".trimIndent()
+    }
 
 
     /**
@@ -195,7 +274,14 @@ ${if (logData.data.isNotEmpty()) "Data:\n${logData.data.map { "\t${it.key}\t${it
     }
 
     interface LogHandler {
-        fun onLog(level: Level, tags: List<String>, message: String, t: Throwable? = null, data: LogData, time: Long = System.currentTimeMillis())
+        fun onLog(
+            level: Level,
+            tags: List<String>,
+            message: String,
+            t: Throwable? = null,
+            data: LogData,
+            time: Long = System.currentTimeMillis()
+        )
     }
 
     class LogData {
