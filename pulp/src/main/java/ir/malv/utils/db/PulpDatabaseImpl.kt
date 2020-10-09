@@ -42,6 +42,6 @@ object PulpDatabaseImpl {
         } else { "" }
     }
 
-    private fun serializeData(data: Map<String, String>?): String = data?.let { JSONObject(it).toString() } ?: ""
+    private fun serializeData(data: Map<String, String?>?): String = data?.let { JSONObject(it).toString() } ?: ""
 
 }

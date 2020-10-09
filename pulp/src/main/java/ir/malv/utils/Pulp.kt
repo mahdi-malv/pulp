@@ -199,9 +199,9 @@ ${if (logData.data.isNotEmpty()) "Data:\n${logData.data.map { "\t${it.key}\t${it
     }
 
     class LogData {
-        val data = HashMap<String, String>()
-        infix fun String.to(value: String) {
-            data[this] = value
+        val data = HashMap<String, String?>()
+        infix fun String.to(value: String?) {
+            data[this] = value.toString()
         }
     }
 }

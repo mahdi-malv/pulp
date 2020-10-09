@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         Pulp.info("TEST", "This is a message") {
             "Key1" to "Value1"
+            "Key2" to null
         }
 
         text.setOnClickListener {
