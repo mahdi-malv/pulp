@@ -6,11 +6,12 @@ apply plugin: 'kotlin-android-extensions'
 
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode versionCode
         versionName versionName
 
@@ -28,10 +29,11 @@ android {
 }
 
 def deps = [
-        Room: 'androidx.room:room-runtime:2.0.0',
-        RoomAnnotation: 'androidx.room:room-compiler:2.0.0',
-        LifeCycleExtension: 'androidx.lifecycle:lifecycle-extensions:2.0.0',
-        LifeCycleAnnotation: 'androidx.lifecycle:lifecycle-compiler:2.0.0',
+        Room: 'androidx.room:room-runtime:2.2.5',
+        RoomRx: 'androidx.room:room-rxjava2:2.2.5',
+        RoomAnnotation: 'androidx.room:room-compiler:2.2.5',
+        LifeCycleExtension: 'androidx.lifecycle:lifecycle-extensions:2.2.0',
+        LifeCycleAnnotation: 'androidx.lifecycle:lifecycle-compiler:2.2.0',
         Annotations: 'annotation'
 ]
 
@@ -40,6 +42,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation deps.Room
+    implementation deps.RoomRx
     implementation deps.LifeCycleExtension
 
     kapt deps.RoomAnnotation
