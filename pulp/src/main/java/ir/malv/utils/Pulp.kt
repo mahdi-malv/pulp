@@ -98,49 +98,49 @@ object Pulp {
 
     // ------ Logs
 
-    fun debug(tags: Array<String>, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun debug(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
         val mapData = LogData()
         mapData.data()
-        log(Pulp.Level.D, tags.toList(), message, error, mapData)
+        log(Pulp.Level.D, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun debug(tag: String, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun debug(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
         debug(arrayOf(tag), message, error, data)
 
-    fun info(tags: Array<String>, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun info(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
         val mapData = LogData()
         mapData.data()
-        log(Pulp.Level.I, tags.toList(), message, error, mapData)
+        log(Pulp.Level.I, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun info(tag: String, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun info(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
         info(arrayOf(tag), message, error, data)
 
-    fun warn(tags: Array<String>, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun warn(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
         val mapData = LogData()
         mapData.data()
-        log(Pulp.Level.W, tags.toList(), message, error, mapData)
+        log(Pulp.Level.W, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun warn(tag: String, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun warn(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
         warn(arrayOf(tag), message, error, data)
 
-    fun error(tags: Array<String>, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun error(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
         val mapData = LogData()
         mapData.data()
-        log(Pulp.Level.E, tags.toList(), message, error, mapData)
+        log(Pulp.Level.E, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun error(tag: String, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun error(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
         error(arrayOf(tag), message, error, data)
 
-    fun wtf(tags: Array<String>, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) {
+    fun wtf(tags: Array<String>, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) {
         val mapData = LogData()
         mapData.data()
-        log(Pulp.Level.WTF, tags.toList(), message, error, mapData)
+        log(Pulp.Level.WTF, tags.toList(), message.toString(), error, mapData)
     }
 
-    fun wtf(tag: String, message: String, error: Throwable? = null, data: LogData.() -> Unit = {}) =
+    fun wtf(tag: String, message: String?, error: Throwable? = null, data: LogData.() -> Unit = {}) =
         wtf(arrayOf(tag), message, error, data)
 
     private fun log(level: Level, tags: List<String>, message: String, t: Throwable? = null, data: LogData) {
