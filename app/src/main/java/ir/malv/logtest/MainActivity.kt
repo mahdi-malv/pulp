@@ -1,10 +1,9 @@
 package ir.malv.logtest
 
-import androidx.lifecycle.Observer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import ir.malv.utils.Pulp
-import ir.malv.utils.db.PulpItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         Pulp.info("TEST", "This is a message") {
             "Key1" to "Value1"
+            "Key2" to null
         }
 
         text.setOnClickListener {

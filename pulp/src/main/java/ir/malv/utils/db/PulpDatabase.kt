@@ -1,11 +1,11 @@
 package ir.malv.utils.db
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import android.content.Context
 
 @Database(entities = [PulpItem::class], exportSchema = false, version = 1)
-abstract class PulpDatabase: RoomDatabase() {
+abstract class PulpDatabase : RoomDatabase() {
 
     abstract fun pulpDao(): PulpDao
 
@@ -17,7 +17,8 @@ abstract class PulpDatabase: RoomDatabase() {
             return instance ?: Room.databaseBuilder(
                 context,
                 PulpDatabase::class.java,
-                "pulp.db")
+                "pulp.db"
+            )
                 .build()
                 .also { instance = it }
         }
