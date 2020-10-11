@@ -30,4 +30,4 @@ cache:
 
 script:
   - echo something > local.properties
-  - ./gradlew clean assemble
+  - ./gradlew assemble

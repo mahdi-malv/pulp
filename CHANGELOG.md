@@ -1,3 +1,6 @@
+## 0.3.1
+* Add null support to data values
+
 ## 0.3.0
 * Fix `clearLogs()` not operating on it's thread.
 * [Breaking] Migrate project to AndroidX.

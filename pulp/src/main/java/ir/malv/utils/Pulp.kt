@@ -6,6 +6,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import ir.malv.utils.db.PulpDatabaseImpl
 import ir.malv.utils.db.PulpItem
+import java.util.*
+import kotlin.collections.HashMap
 
 
 /**
@@ -36,7 +38,7 @@ object Pulp {
         )
         val value = ai.metaData?.get("pulp_enabled") ?: return this
         logEnabled =
-            if (listOf("true", "1", "yes", "ok").contains(value.toString().toLowerCase())) {
+            if (listOf("true", "1", "yes", "ok").contains(value.toString().toLowerCase(Locale.ROOT))) {
                 true
             } else !listOf("false", "0", "no", "nope").contains(value.toString())
         return this

@@ -18,12 +18,6 @@ Or include the pre-release version
 maven { url 'https://dl.bintray.com/mah-d/preview' }
 ```
 
-```groovy
-implementation "ir.malv.utils:pulp:$version"
-```
-<img src="https://img.shields.io/github/release-pre/mahdi-malv/pulp"></img>
-
-
 ## Usage
 
 ### Simple usage

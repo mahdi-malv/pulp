@@ -3,8 +3,8 @@
 
 buildscript {
     ext {
-        versionName = '0.3.0'
-        versionCode = 30099  // Mmmpprr
+        versionName = '0.3.1'
+        versionCode = 30199  // Mmmpprr
 
         kotlin_version = '1.4.10'
     }
