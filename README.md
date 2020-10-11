@@ -9,7 +9,7 @@ Pulp is a very simple logger tool for android using **Kotlin** programming langu
 ```groovy
 implementation "ir.malv.utils:pulp:$version"
 ```
-<img src="https://img.shields.io/github/release/mahdi-malv/pulp"></img>
+<img src="https://img.shields.io/bintray/v/mah-d/maven/pulp?color=blue&style=plastic"></img>
 
 Or include the pre-release version
 
