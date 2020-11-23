@@ -16,7 +16,7 @@ ext {
     // publishedGroupId:artifact:libraryVersion
     publishedGroupId = 'ir.malv.utils'
     artifact = 'pulp'
-    libraryVersion = '0.3.1'
+    libraryVersion = versionName
 
     libraryName = 'Pulp'
 
