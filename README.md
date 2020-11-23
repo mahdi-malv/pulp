@@ -11,16 +11,17 @@ implementation "ir.malv.utils:pulp:$version"
 ```
 <img src="https://img.shields.io/bintray/v/mah-d/maven/pulp?color=blue&style=plastic"></img>
 
-Or include the pre-release version
-
-* Add this to your gradle repositories
-```groovy
-maven { url 'https://dl.bintray.com/mah-d/preview' }
-```
-
 ## Usage
 
 ### Simple usage
+
+Initialize a **LogHandler** at the start of application
+
+```kotlin
+Pulp.addHandler(LogCatHandler())
+```
+
+then use the log functions:
 
 ```kotlin
 Pulp.info("TAG", "This is a message")
@@ -36,20 +37,6 @@ Pulp.info("TAG", "Message, but not enough") {
 }
 ```
 
-**Note**: You can pass an array of tags instead of one:
-```kotlin
-Pulp.warn(arrayOf("Be careful", "MyApp"), "Message", throwable)
-```
-
-Output will be like:
-```
-2019-08-01 16:06:40.768 26299-26299/ir.malv.logtest I/Pulp: MainTag:
-    Tags: [TAG]
-    Message: Message but not enough
-    Data:
-     ExtraMessage1  Message...
-     ExtraMessage2  Message...
-```
 
 #### Add throwable to log
 
@@ -60,30 +47,8 @@ Pulp.error("TAG", "Failed", t) {
 }
 ```
 
-#### Setting the Log tag
-
-```kotlin
-Pulp.setMainTag("My APP")
-```
 
 ### Advanced usage
-
-#### Toggle Enable/Disable Pulp
-
-```kotlin
-Pulp.setLogsEnabled(false)
-```
-
-Disabling the logger can also be done using an AndroidManifest meta-data.
-
-```xml
-<meta-data android:name="pulp_enabled" android:value="false" />
-```
-**Note**: To get Pulp extract manifest (since it needs constructor), you need to add this to your `Application` class:
-
-```kotlin
-Pulp.init(this /* context */)
-```
 
 #### Listening to Logs when it was triggered
 
@@ -102,6 +67,8 @@ Pulp.addHandler(object: Pulp.LogHandler {
     }
 })
 ```
+
+> `LogCatHandler` is an implementation of `LogHandler` which prints to Logcat
 
 **Note**: You can add multiple handlers and all of them will be called when logging.
 * Handlers can also be disabled:
@@ -144,20 +111,11 @@ Pulp.clearLogs(context)
 * `E`: Error
 * `WTF`: Unexpected
 
-#### Print a simple message (not a Pulp log)
-When you don't want to send callback or follow the message style of pulp, you can print a simple message.
-
-```kotlin
-Pulp.sout("Message") // output: MainTag ### Message
-```
-It will not notify callbacks.
-
 
 * All config methods can be chained:
 
 ```kotlin
 Pulp.init(this)
-    .setMainTag("MyApp")
     .setHandlerEnabled(true)
     .setLogsEnabled(true)
     .setDatabaseEnabled(true)

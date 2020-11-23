@@ -1,3 +1,11 @@
+# Changelog
+
+## 0.4.0
+* Remove default log to logcat. Instead it's mandatory to call `Pulp.addHandler(LogCatListener())` to print logs in logcat.
+* Better formatting for LogCat print
+* `Pulp.sout()` is marked as deprecated
+* `Pulp.setMainTag()` is marked as deprecated
+
 ## 0.3.1
 * Add null support to data values
 

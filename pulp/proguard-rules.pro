@@ -20,5 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep ir.malv.utils.Pulp { *; }
--keep ir.malv.utils.PulpItem { *; }
+-keep class ir.malv.utils.Pulp { *; }
+-keep class ir.malv.utils.LogCatHandler { *; }

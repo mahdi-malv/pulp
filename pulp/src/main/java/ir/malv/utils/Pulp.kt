@@ -53,6 +53,7 @@ object Pulp {
      * When logging, Pulp adds a tag, with this Pulp will replace the tag.
      * @param tag will be the used tag
      */
+    @Deprecated("MainTag is now useless. Tags of logs will be used instead")
     fun setMainTag(tag: String): Pulp {
         LOG_TAG = tag
         return this
@@ -222,53 +223,12 @@ object Pulp {
                 PulpDatabaseImpl.insert(it, level, tags, message, t, data, time)
             }
         }
-
-        val logMessage = logMessage(tags, message, data)
-        when (level) {
-            Pulp.Level.I -> if (t != null) Log.i(LOG_TAG, logMessage, t) else Log.i(
-                LOG_TAG,
-                logMessage
-            )
-            Pulp.Level.D -> if (t != null) Log.d(LOG_TAG, logMessage, t) else Log.d(
-                LOG_TAG,
-                logMessage
-            )
-            Pulp.Level.W -> if (t != null) Log.w(LOG_TAG, logMessage, t) else Log.w(
-                LOG_TAG,
-                logMessage
-            )
-            Pulp.Level.E -> if (t != null) Log.e(LOG_TAG, logMessage, t) else Log.e(
-                LOG_TAG,
-                logMessage
-            )
-            Pulp.Level.WTF -> if (t != null) Log.wtf(LOG_TAG, logMessage, t) else Log.wtf(
-                LOG_TAG,
-                logMessage
-            )
-        }
     }
-
-    private fun logMessage(
-        tags: List<String>,
-        message: String,
-        logData: LogData
-    ): String {
-        return """
-$LOG_TAG:
-Tags: $tags
-Message: $message
-${
-            if (logData.data.isNotEmpty()) "Data:\n${
-                logData.data.map { "\t${it.key}\t${it.value}" }.joinToString("\n")
-            }" else ""
-        }
-""".trimIndent()
-    }
-
 
     /**
      * Sout will not work as a regular log. It will not notify handlers and is not using Pulp format. It's just a sysout.
      */
+    @Deprecated("Use other logs and instead use a different LogHandler other than LogCatListener")
     fun sout(message: String) = println("$LOG_TAG ### $message")
 
     enum class Level {

@@ -3,6 +3,7 @@ package ir.malv.logtest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import ir.malv.utils.LogCatHandler
 import ir.malv.utils.Pulp
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -12,12 +13,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Pulp.init(this)
-            .setMainTag("MyApp")
             .setDatabaseEnabled(true)
-            .getSavedLogs(this).observe(this,
-                Observer {
-                    Pulp.sout("Saved logs changed: $it")
-                })
+            .addHandler(LogCatHandler())
 
         Pulp.info("TEST", "This is a message") {
             "Key1" to "Value1"

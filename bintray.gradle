@@ -9,6 +9,7 @@ ext {
      *  Publishing package to this repo is only accessible via it's link.
      */
     bintrayRepo = 'maven'
+    bintrayRepoPreview = 'preview'
     bintrayName = 'pulp'
 
 
@@ -36,6 +37,7 @@ ext {
 
 group = publishedGroupId
 version = libraryVersion
+def v = libraryVersion.toString()
 
 install {
     repositories.mavenInstaller {
@@ -99,7 +101,8 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        repo = bintrayRepo
+        def url = (v.contains("alpha") || v.contains("alpha") || v.contains("alpha")) ? bintrayRepo : bintrayRepoPreview
+        repo = url
         name = bintrayName
         desc = libraryDescription
         userOrg = 'mah-d'
