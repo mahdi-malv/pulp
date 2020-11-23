@@ -101,7 +101,7 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        def url = (v.contains("alpha") || v.contains("alpha") || v.contains("alpha")) ? bintrayRepo : bintrayRepoPreview
+        def url = (v.contains("alpha") || v.contains("alpha") || v.contains("alpha")) ? bintrayRepoPreview : bintrayRepo
         repo = url
         name = bintrayName
         desc = libraryDescription
