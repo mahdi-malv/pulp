@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -29,11 +28,11 @@ android {
 }
 
 def deps = [
-        Room: 'androidx.room:room-runtime:2.2.5',
-        RoomAnnotation: 'androidx.room:room-compiler:2.2.5',
-        LifeCycleExtension: 'androidx.lifecycle:lifecycle-extensions:2.2.0',
+        Room               : 'androidx.room:room-runtime:2.2.5',
+        RoomAnnotation     : 'androidx.room:room-compiler:2.2.5',
+        LifeCycleExtension : 'androidx.lifecycle:lifecycle-extensions:2.2.0',
         LifeCycleAnnotation: 'androidx.lifecycle:lifecycle-compiler:2.2.0',
-        Annotations: 'annotation'
+        Annotations        : 'annotation'
 ]
 
 dependencies {
@@ -41,15 +40,20 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation deps.Room
-    implementation deps.LifeCycleExtension
+    api deps.LifeCycleExtension
 
     kapt deps.RoomAnnotation
     kapt deps.LifeCycleAnnotation
 
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 }
 
+ext {
+    PUBLISH_VERSION = versionName // TODO: Clean usage - versions might be the same for all modules - so use them globally?
+    PUBLISH_ARTIFACT_ID = 'pulp'
+    ARTIFACT_DESCRIPTION = "Light weight logging library"
+    uploadSources = false
+}
 
-
-apply from: '../bintray.gradle'
+apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"

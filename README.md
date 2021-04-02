@@ -7,9 +7,10 @@ Pulp is a very simple logger tool for android using **Kotlin** programming langu
 * Add the dependency code to your project
 
 ```groovy
+// mavenCentral() is needed
 implementation "ir.malv.utils:pulp:$version"
 ```
-<img src="https://img.shields.io/bintray/v/mah-d/maven/pulp?color=blue&style=plastic"></img>
+version: <img src="https://img.shields.io/maven-central/v/ir.malv.utils/pulp?logo=android"></img>
 
 ## Usage
 

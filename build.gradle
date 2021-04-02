@@ -1,12 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+apply plugin: 'io.codearte.nexus-staging'
 
 buildscript {
     ext {
-        versionName = '0.4.0'
-        versionCode = 40099  // Mmmpprr
+        versionName = '0.4.2-alpha03'
+        versionCode = 40202  // Mmmpprr
 
         kotlin_version = '1.4.10'
+
+        // TODO: Move these to better place
+        uploadJavadocs = false
+        uploadSources = false
+        PUBLISH_GROUP_ID = 'ir.malv.utils'
     }
     repositories {
         google()
@@ -23,7 +28,7 @@ buildscript {
 
         // Maven
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0'
     }
 }
 

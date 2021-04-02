@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.2-alpha03
+* Changes in maven to migrate library to maven central
+**Note**: No changes in functionality
+
 ## 0.4.0
 * Remove default log to logcat. Instead it's mandatory to call `Pulp.addHandler(LogCatListener())` to print logs in logcat.
 * Better formatting for LogCat print
