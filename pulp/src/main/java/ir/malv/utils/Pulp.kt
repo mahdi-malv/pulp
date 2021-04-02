@@ -30,6 +30,7 @@ object Pulp {
      * you must call `Pulp.init(context)` to make that work.
      * Pulp needs context to interact with manifest.
      */
+    @JvmStatic
     fun init(context: Context): Pulp {
         applicationContext = context.applicationContext
         val ai = context.packageManager.getApplicationInfo(
@@ -44,6 +45,7 @@ object Pulp {
         return this
     }
 
+    @JvmStatic
     fun setApplicationContext(context: Context): Pulp {
         applicationContext = context.applicationContext
         return this
@@ -53,17 +55,20 @@ object Pulp {
      * When logging, Pulp adds a tag, with this Pulp will replace the tag.
      * @param tag will be the used tag
      */
+    @JvmStatic
     @Deprecated("MainTag is now useless. Tags of logs will be used instead")
     fun setMainTag(tag: String): Pulp {
         LOG_TAG = tag
         return this
     }
 
+    @JvmStatic
     fun setLogsEnabled(enabled: Boolean): Pulp {
         logEnabled = enabled
         return this
     }
 
+    @JvmStatic
     fun setDatabaseEnabled(enabled: Boolean): Pulp {
         databaseEnabled = enabled
         return this
@@ -75,10 +80,12 @@ object Pulp {
      *
      * If [Pulp.init] was not called and
      */
+    @JvmStatic
     fun getSavedLogs(context: Context): LiveData<List<PulpItem>> {
         return PulpDatabaseImpl.savedLogs(context)
     }
 
+    @JvmStatic
     fun clearLogs(context: Context) {
         PulpDatabaseImpl.clearLogs(context)
     }
@@ -87,17 +94,20 @@ object Pulp {
      * Every log created to be shown will also be sent to all handlers.
      * Using this method you can add handler to list of handlers.
      */
+    @JvmStatic
     fun addHandler(logHandler: LogHandler): Pulp {
         handlers.add(logHandler)
         return this
     }
 
+    @JvmStatic
     fun removeAllHandlers() = handlers.clear()
 
     /**
      * Calling this with false param, will cause the handlers, not to be nitified.
      * This is separate from log enabled. Even if the log is disabled, handlers will be notified.
      */
+    @JvmStatic
     fun setHandlerEnabled(enabled: Boolean): Pulp {
         handlersEnabled = enabled
         return this
@@ -105,6 +115,8 @@ object Pulp {
 
     // ------ Logs
 
+    @JvmStatic
+    @JvmOverloads
     fun debug(
         tags: Array<String>,
         message: String?,
@@ -116,6 +128,8 @@ object Pulp {
         log(Pulp.Level.D, tags.toList(), message.toString(), error, mapData)
     }
 
+    @JvmStatic
+    @JvmOverloads
     fun debug(
         tag: String,
         message: String?,
@@ -124,6 +138,8 @@ object Pulp {
     ) =
         debug(arrayOf(tag), message, error, data)
 
+    @JvmStatic
+    @JvmOverloads
     fun info(
         tags: Array<String>,
         message: String?,
@@ -135,6 +151,8 @@ object Pulp {
         log(Pulp.Level.I, tags.toList(), message.toString(), error, mapData)
     }
 
+    @JvmStatic
+    @JvmOverloads
     fun info(
         tag: String,
         message: String?,
@@ -143,6 +161,8 @@ object Pulp {
     ) =
         info(arrayOf(tag), message, error, data)
 
+    @JvmStatic
+    @JvmOverloads
     fun warn(
         tags: Array<String>,
         message: String?,
@@ -154,6 +174,8 @@ object Pulp {
         log(Pulp.Level.W, tags.toList(), message.toString(), error, mapData)
     }
 
+    @JvmStatic
+    @JvmOverloads
     fun warn(
         tag: String,
         message: String?,
@@ -162,6 +184,8 @@ object Pulp {
     ) =
         warn(arrayOf(tag), message, error, data)
 
+    @JvmStatic
+    @JvmOverloads
     fun error(
         tags: Array<String>,
         message: String?,
@@ -173,6 +197,8 @@ object Pulp {
         log(Pulp.Level.E, tags.toList(), message.toString(), error, mapData)
     }
 
+    @JvmStatic
+    @JvmOverloads
     fun error(
         tag: String,
         message: String?,
@@ -181,6 +207,8 @@ object Pulp {
     ) =
         error(arrayOf(tag), message, error, data)
 
+    @JvmStatic
+    @JvmOverloads
     fun wtf(
         tags: Array<String>,
         message: String?,
@@ -192,6 +220,8 @@ object Pulp {
         log(Pulp.Level.WTF, tags.toList(), message.toString(), error, mapData)
     }
 
+    @JvmStatic
+    @JvmOverloads
     fun wtf(
         tag: String,
         message: String?,
@@ -228,6 +258,7 @@ object Pulp {
     /**
      * Sout will not work as a regular log. It will not notify handlers and is not using Pulp format. It's just a sysout.
      */
+    @JvmStatic
     @Deprecated("Use other logs and instead use a different LogHandler other than LogCatListener")
     fun sout(message: String) = println("$LOG_TAG ### $message")
 

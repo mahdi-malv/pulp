@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 15
@@ -27,7 +27,7 @@ android {
 
 }
 
-def deps = [
+def modules = [
         Room               : 'androidx.room:room-runtime:2.2.5',
         RoomAnnotation     : 'androidx.room:room-compiler:2.2.5',
         LifeCycleExtension : 'androidx.lifecycle:lifecycle-extensions:2.2.0',
@@ -39,20 +39,25 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation deps.Room
-    api deps.LifeCycleExtension
+    implementation modules.Room
+    api modules.LifeCycleExtension
 
-    kapt deps.RoomAnnotation
-    kapt deps.LifeCycleAnnotation
+    kapt modules.RoomAnnotation
+    kapt modules.LifeCycleAnnotation
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 }
 
 ext {
-    PUBLISH_VERSION = versionName // TODO: Clean usage - versions might be the same for all modules - so use them globally?
+    // These could be set globally
+    PUBLISH_GROUP_ID = 'ir.malv.utils'
+    PUBLISH_VERSION = versionName
+
+    // These should be module-dependent
     PUBLISH_ARTIFACT_ID = 'pulp'
     ARTIFACT_DESCRIPTION = "Light weight logging library"
+    uploadJavadocs = false
     uploadSources = false
 }
 
